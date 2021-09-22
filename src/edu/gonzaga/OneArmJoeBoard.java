@@ -1,3 +1,12 @@
+/**
+ * This program is a single player game of One-Arm Joe Dominoes against a computer player
+ * It is a multi-round game, lasting until one player reaches at least 20 points
+ * CPSC 312, Fall 2021
+ * PA2
+ * No sources to site
+ * @Connor Deide
+ * @Version v1.0.0 9/21/2020
+ */
 package edu.gonzaga;
 
 import java.util.ArrayList;
@@ -17,10 +26,6 @@ public class OneArmJoeBoard {
     //Getter
     public List<Domino> getDominoes() {
         return dominoes;
-    }
-    //Setter
-    public void setDominoes(List<Domino> dominoes) {
-        this.dominoes = dominoes;
     }
 
     /**

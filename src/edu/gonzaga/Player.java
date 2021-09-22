@@ -1,3 +1,12 @@
+/**
+ * This program is a single player game of One-Arm Joe Dominoes against a computer player
+ * It is a multi-round game, lasting until one player reaches at least 20 points
+ * CPSC 312, Fall 2021
+ * PA2
+ * No sources to site
+ * @Connor Deide
+ * @Version v1.0.0 9/21/2020
+ */
 package edu.gonzaga;
 
 import java.util.*;
@@ -9,6 +18,7 @@ public class Player {
     private int playerNum;
     private List<Domino> hand;
 
+    //Constructor
     public Player (int playerNum, List<Domino> boneyard) {
         this.playerNum = playerNum;
         ArrayList<Domino> hand = new ArrayList<>();
@@ -58,7 +68,7 @@ public class Player {
         if(turnNum == 2) { // Turn number 2 is a special case, can start the arm in either direction
             for(int i = 0; i < board.getDominoes().size(); i++) {
                 for(int j = 0; j < hand.size(); j++) {
-                    if(hand.get(j).getPipsRight() == board.getDominoes().get(0).getPipsLeft()) {
+                    if(hand.get(j).getPipsRight() == board.getDominoes().get(0).getPipsLeft() || hand.get(j).getPipsLeft() == board.getDominoes().get(0).getPipsLeft()) {
                         board.getDominoes().get(0).flip(); //flip
                         return true; //Check for match on the opposite arm
                     }
@@ -83,6 +93,11 @@ public class Player {
         return false;
     }
 
+    /**
+     * Method is called in playTurn, edits the board by adding the first domino
+     * @param startPlayer
+     * @param board
+     */
     public void firstTurn(int startPlayer, OneArmJoeBoard board) {
         if(startPlayer == 1) {
             System.out.println("- It is Player1's turn -");
@@ -113,10 +128,17 @@ public class Player {
         }
     }
 
+    /**
+     * Method edits the board by adding a domino to the arm, calls other methods to check validity of input
+     * @param turnNum
+     * @param player
+     * @param boneyard
+     * @param board
+     */
     public void playTurn(int turnNum, int player, Boneyard boneyard, OneArmJoeBoard board){
         boolean validPlay = false;
         boolean mustDraw = false;
-        if(turnNum == 1) {
+        if(turnNum == 1) { //Special case
             firstTurn(player, board);
             System.out.println("Press enter to continue...");
             getInput();
@@ -156,14 +178,14 @@ public class Player {
                 for(int i = 0; i < board.getDominoes().size(); i++) {
                     for(j = 0; j < hand.size() - 1; j++) {
                         if(hand.get(j).getPipsLeft() == board.getDominoes().get(board.getDominoes().size() - 1).getPipsRight()) {
-                            break; //If match is found return true
+                            break; //Find index and break
                         }
                         if(hand.get(j).getPipsRight() == board.getDominoes().get(board.getDominoes().size() - 1).getPipsRight()) {
-                            break;
+                            break; //Find index and break
                         }
                     }
                 }
-                System.out.println("Playing a " + hand.get(j));
+                System.out.println("Playing a " + hand.get(j)); //Use found index
                 //Add domino to board and remove from hand
                 board.addDomino(hand.get(j));
                 hand.remove(j);
@@ -188,7 +210,7 @@ public class Player {
         int i;
         for(i = 0; i < hand.size() - 1; i++) {
             if(pipsLeft == hand.get(i).getPipsLeft() && pipsRight == hand.get(i).getPipsRight()) {
-                break;
+                break; //Find index and break
             }
         }
         checkBoneyard = board.addDomino(hand.get(i));
